@@ -22,19 +22,21 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
 
 # print(datasets.feature_names)
 # print(datasets.DESCR) # feature 자세히 나옴
+# print(datasets['filename'])
 
 #2. 모델구성
 model = Sequential()
 model.add(Dense(5, input_dim=13))
-model.add(Dense(4))
+model.add(Dense(100))
 model.add(Dense(3))
-model.add(Dense(4))
+model.add(Dense(100))
+model.add(Dense(3))
 model.add(Dense(1))
 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam')
 
-model.fit(x_train, y_train, epochs=1000, batch_size=1)
+model.fit(x_train, y_train, epochs=10000, batch_size=1)
 
 #4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
@@ -47,6 +49,9 @@ r2 = r2_score(y_test, y_predict)
 
 print("r2스코어 : ", r2)
 
+# epochs=1000, batch_size=1, loss :  17.291133880615234 r2스코어 :  0.7907075553752195
+# 1000, 1, layer 변경 , loss :  17.116796493530273, r2스코어 :  0.7928177634040774
+# 10000, 1, loss :  16.508121490478516, r2스코어 :  0.8001851831896087
 
 
 
