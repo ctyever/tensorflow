@@ -1,5 +1,4 @@
 # 과제3
-from numpy.testing._private.nosetester import _numpy_tester
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np

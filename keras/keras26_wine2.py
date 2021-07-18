@@ -24,7 +24,7 @@ datasets = datasets.to_numpy()
 
 x = datasets[:, :11]
 y = datasets[:, 11:]
-print(y)
+# print(y)
 
 # print(x.shape, y.shape) # (4898, 11) (4898, 1)
 # print(np.unique(y)) # [3. 4. 5. 6. 7. 8. 9.]
@@ -32,20 +32,21 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 oneHot_encoder = OneHotEncoder(sparse=False)  # 주의 : sparse=False
 y = oneHot_encoder.fit_transform(y)
+# print(np.unique(y))  # [0. 1.]
 
 
 # from tensorflow.keras.utils import to_categorical
 # y = to_categorical(y)
 
 
-print(y[:5])
-print(y.shape) # (4898, 7)
+# print(y[:5])
+# print(y.shape) # (4898, 7)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, 
         train_size=0.7, shuffle=True, random_state=9)
 
-print(y_test)
-print(y_train)
+# print(y_test)
+# print(y_train)
 
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
@@ -85,5 +86,5 @@ loss = model.evaluate(x_test, y_test)
 print('loss : ', loss[0])
 print('accuracy : ', loss[1])
 
-# # loss :  1.0831924676895142
-# # accuracy :  0.5401360392570496
+# # # loss :  1.0831924676895142
+# # # accuracy :  0.5401360392570496

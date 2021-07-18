@@ -4,7 +4,6 @@
 
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
-from sklearn.model_selection import train_test_split
 import numpy as np
 
 # 1. 데이터 구성
@@ -30,11 +29,12 @@ output1 = Dense(1)(dense4)
 model = Model(inputs= input1, outputs=output1)
 model.summary()
 
-
+# 3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam')
 
 model.fit(x, y, epochs=1000, batch_size=3)
 
+# 4. 평가, 예측
 loss = model.evaluate(x, y)
 print('loss : ', loss)
 

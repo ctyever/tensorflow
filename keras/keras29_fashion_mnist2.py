@@ -1,7 +1,7 @@
-from numpy.lib.financial import nper
 from tensorflow.keras.datasets import fashion_mnist
 import numpy as np
 
+ # 1. 데이터 구성
 (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
 
 x_train = x_train.reshape(60000, 28, 28, 1)
@@ -30,6 +30,7 @@ y_test = to_categorical(y_test)
 # x_train = scaler.transform(x_train)
 # x_test = scaler.transform(x_test)
 
+# 2. 모델 구성
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 

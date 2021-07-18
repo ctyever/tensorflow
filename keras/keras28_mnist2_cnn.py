@@ -12,6 +12,10 @@ from tensorflow.keras.datasets import mnist
 x_train = x_train.reshape(60000, 28, 28, 1)
 x_test = x_test.reshape(10000, 28, 28, 1)
 
+# print(np.min(x_train), np.max(x_train)) # 0 255
+x_train = (x_train - np.min(x_train)) / (np.max(x_train) - np.min(x_train))
+x_test = (x_test - np.min(x_test)) / (np.max(x_test) - np.min(x_test))
+
 from tensorflow.keras.utils import to_categorical
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
@@ -36,6 +40,7 @@ y_test = to_categorical(y_test)
 
 # print(x_train)
 
+# 2. 모델 구성
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 
@@ -51,15 +56,22 @@ model.add(Dense(10, activation='softmax'))
 
 # model.summary()
 
-# #3. 컴파일, 훈련
+#3. 컴파일, 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) # 다중분류에서 loss 는 categorical_crossentropy
 
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='loss', patience=5, mode='min', verbose=1)
 
-model.fit(x_train, y_train, epochs=100, batch_size=32, callbacks=[es], validation_split=0.1, verbose=2)
+model.fit(x_train, y_train, epochs=100, batch_size=150, callbacks=[es], validation_split=0.1, verbose=2)
 
 #4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
 print('loss : ', loss[0])
 print('accuracy : ', loss[1])
+
+# loss :  0.12132221460342407
+# accuracy :  0.984499990940094
+
+# minmax 처리, batch_size=32 -> batch_size=150
+# loss :  0.0800686776638031
+# accuracy :  0.9868000149726868

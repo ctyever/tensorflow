@@ -1,4 +1,3 @@
-from numpy.testing._private.nosetester import _numpy_tester
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np
@@ -17,10 +16,6 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
 # x_test = x[-30:]
 # y_test = y[70:]
 
-print(x_test) # (70,) (70,)
-print(y_test) # (30,) (30,)
-
-'''
 #2. 모델구성
 model = Sequential()
 model.add(Dense(5, input_dim=1)) # Dense layer y = wx + b
@@ -32,7 +27,7 @@ model.add(Dense(1))
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam')
 
-model.fit(x_train, y_train, epochs=1000, batch_size=1)
+model.fit(x_train, y_train, epochs=100, batch_size=1)
 
 #4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
@@ -45,5 +40,5 @@ print(x_train)
 print(y_train)
 print(x_test)
 print(y_test)
-'''
+
 

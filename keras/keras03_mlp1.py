@@ -13,6 +13,20 @@ x = np.array([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 x = np.transpose(x)
 # x2 = x.swapaxes(0, 1) 다른 방법
 # print(x.shape) # (10, 2)
+# print(x)
+
+'''
+[[ 1.   1. ]
+ [ 2.   1.1]
+ [ 3.   1.2]
+ [ 4.   1.3]
+ [ 5.   1.4]
+ [ 6.   1.5]
+ [ 7.   1.6]
+ [ 8.   1.5]
+ [ 9.   1.4]
+ [10.   1.3]]
+'''
 
 y = np.array([11, 12, 13, 14, 15, 16, 17, 18, 19, 20])
 # print(y.shape) # (10,)
@@ -29,13 +43,13 @@ model.add(Dense(1))
 #3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
 
-model.fit(x, y, epochs=1000, batch_size=1)
+model.fit(x, y, epochs=100, batch_size=1)
 
 #4. 평가 예측
 loss = model.evaluate(x, y)
 print('loss : ', loss)
 y_predict = model.predict(x)
-print('[10, 1.3] 예측값 : ', y_predict)
+print('예측값 : ', y_predict)
 
 # epochs=500, loss :  0.10875537246465683  [10, 1.3] 예측값 :  [[19.549253]]
 # epochs=1000, loss :  0.012192628346383572 [10, 1.3] 예측값 :  [[19.791632]] / loss :  0.0016621561953797936 [10, 1.3] 예측값 :  [[19.968134]]

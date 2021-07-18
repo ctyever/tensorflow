@@ -1,7 +1,5 @@
 # 데이터
-from os import name
 import numpy as np
-from tensorflow.python.keras.backend import shape  
 from sklearn.model_selection import train_test_split
 
 x1 = np.array([range(100), range(301, 401), range(1, 101)])

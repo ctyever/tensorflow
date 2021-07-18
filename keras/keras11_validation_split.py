@@ -1,8 +1,6 @@
-from numpy.testing._private.nosetester import _numpy_tester
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
 #1. 데이터
