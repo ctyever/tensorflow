@@ -1,12 +1,6 @@
-# overfit을 극복하자!!!
-
-# 1. 젠체 훈련을 데이터가 마니 마니!!!
-# 2. 노말라이제이션 (normaliztion) layer에서도 노말라이제이션 한다?? 
-# Fully connected layer 노드가 많을 때 훈련의 과적합이 생길 수 있음
-# 3. dropout
-
 from tensorflow.keras.datasets import cifar100
 import numpy as np
+from tensorflow.python.ops.gen_math_ops import div_no_nan
 
 # 데이터 과적합에 대해서 생각해보기
 
@@ -23,9 +17,6 @@ import numpy as np
  72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
  96 97 98 99]
  '''
-# print(np.min(x_train), np.max(x_train)) # 0 255
-# x_train = (x_train - np.min(x_train)) / (np.max(x_train) - np.min(x_train))
-# x_test = (x_test - np.min(x_test)) / (np.max(x_test) - np.min(x_test))
 
 x_train = x_train.reshape(50000, 32 * 32 * 3)
 x_test = x_test.reshape(10000, 32 * 32 * 3)
@@ -40,36 +31,41 @@ scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train) # 한번에 써줄 수 있음, train 에서만 쓴다
 x_test = scaler.transform(x_test)
 
-x_train = x_train.reshape(50000, 32, 32, 3)
-x_test = x_test.reshape(10000, 32, 32, 3)
-
 from tensorflow.keras.utils import to_categorical
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
 
 # print(y_train.shape, y_test.shape) # (50000, 100) (10000, 100)
 
+x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], 1)
+x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
+
 # 2. 모델 구성
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropout
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, LSTM
 
 model = Sequential()
-model.add(Conv2D(filters=128, kernel_size=(2, 2), padding='valid', activation='relu', input_shape=(32, 32, 3)))
-model.add(Dropout(0.2))
-model.add(Conv2D(128, (2, 2), padding='same', activation='relu'))
-model.add(MaxPooling2D()) 
-
-model.add(Conv2D(64, (2, 2), activation='relu')) 
-model.add(Dropout(0.2))
-model.add(Conv2D(64, (2, 2), padding='same', activation='relu')) 
-model.add(MaxPooling2D()) 
-
-model.add(Flatten()) 
-model.add(Dense(128, activation='relu')) 
-model.add(Dropout(0.2))
+model.add(LSTM(units=128, activation='relu', input_shape=(32*32*3, 1)))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu')) 
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(100, activation='softmax'))
+
+
+# model.add(Conv2D(128, kernel_size=(3, 3), padding='valid', activation='relu', input_shape=(32, 32, 3)))
+# model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+# model.add(MaxPooling2D()) 
+
+# model.add(Conv2D(64, (3, 3), activation='relu')) 
+# model.add(Conv2D(64, (3, 3), padding='same', activation='relu')) 
+# model.add(MaxPooling2D()) 
+
+# model.add(Flatten()) 
+# model.add(Dense(128, activation='relu')) 
+# model.add(Dense(128, activation='relu'))
+# model.add(Dense(100, activation='softmax'))
 
 #3. 컴파일, 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']) # 다중분류에서 loss 는 categorical_crossentropy
@@ -79,7 +75,7 @@ es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
 
 import time
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=100, batch_size=32, callbacks=[es], validation_split=0.25, verbose=2)
+hist = model.fit(x_train, y_train, epochs=100, batch_size=64, callbacks=[es], validation_split=0.25, verbose=2)
 end_time = time.time() - start_time
 
 #4. 평가, 예측
@@ -115,6 +111,8 @@ plt.legend(['acc', 'val_acc'])
 
 plt.show()
 
+# lstm
+# ''
 
 # loss :  10.989113807678223
 # accuracy :  0.2142000049352646
@@ -165,8 +163,7 @@ plt.show()
 # loss :  5.421496868133545
 # acc :  0.32179999351501465
 
-# dropout 
-# 걸린 시간 :  201.7531008720398
-# loss :  2.586777925491333
-# acc :  0.3700000047683716
+# dnn
+# loss :  3.611995220184326
+# acc :  0.19920000433921814
 
