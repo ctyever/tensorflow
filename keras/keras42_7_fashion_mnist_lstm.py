@@ -39,9 +39,9 @@ model.add(Dense(10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) # 다중분류에서 loss 는 categorical_crossentropy
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
+es = EarlyStopping(monitor='loss', patience=5, mode='min', verbose=1)
 
-model.fit(x_train, y_train, epochs=100, batch_size=32, callbacks=[es], validation_split=0.1, verbose=2)
+model.fit(x_train, y_train, epochs=100, batch_size=1500, callbacks=[es], verbose=2)
 
 #4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
@@ -49,7 +49,8 @@ print('loss : ', loss[0])
 print('accuracy : ', loss[1])
 
 # lstm
-# ''
+# loss :  nan
+# accuracy :  0.10000000149011612
 
 # loss :  0.9283794164657593
 # accuracy :  0.8973000049591064

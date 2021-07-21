@@ -34,10 +34,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, LSTM
 
 model = Sequential()
-model.add(LSTM(units=128, activation='relu', input_shape=(32*32*3, 1)))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(64, activation='relu')) 
-model.add(Dense(64, activation='relu'))
+model.add(LSTM(units=10, activation='relu', input_shape=(32*32*3, 1)))
 model.add(Dense(10, activation='softmax'))
 
 # model.add(Conv2D(filters=100, kernel_size=(2, 2), padding='same', input_shape=(32, 32, 3)))
@@ -55,7 +52,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='loss', patience=5, mode='min', verbose=1)
 
-model.fit(x_train, y_train, epochs=100, batch_size=150, callbacks=[es], validation_split=0.1, verbose=2)
+model.fit(x_train, y_train, epochs=100, batch_size=1500, callbacks=[es], verbose=2)
 
 #4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
@@ -63,7 +60,8 @@ print('loss : ', loss[0])
 print('accuracy : ', loss[1])
 
 # lstm
-# ''
+# loss :  nan
+# accuracy :  0.10000000149011612
 
 # loss :  3.7575008869171143
 # accuracy :  0.6108999848365784
