@@ -14,6 +14,15 @@ dataset = split_x(a, size)
 
 print(dataset) 
 
+'''
+[[ 1  2  3  4  5] 
+ [ 2  3  4  5  6] 
+ [ 3  4  5  6  7] 
+ [ 4  5  6  7  8] 
+ [ 5  6  7  8  9] 
+ [ 6  7  8  9 10]]
+'''
+
 x = dataset[:, :4]
 y = dataset[:, 4]
 
