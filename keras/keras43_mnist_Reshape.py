@@ -61,37 +61,37 @@ model.add(Dense(9))
 model.add(Dense(8))
 model.add(Dense(10, activation='softmax'))
 
-model.summary()
+# model.summary()
 
-# #3. 컴파일, 훈련
-# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']) # 다중분류에서 loss 는 categorical_crossentropy
+#3. 컴파일, 훈련
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']) # 다중분류에서 loss 는 categorical_crossentropy
 
-# from tensorflow.keras.callbacks import EarlyStopping
-# es = EarlyStopping(monitor='loss', patience=5, mode='min', verbose=1)
+from tensorflow.keras.callbacks import EarlyStopping
+es = EarlyStopping(monitor='loss', patience=5, mode='min', verbose=1)
 
-# import time
-# start_time = time.time()
-# hist = model.fit(x_train, y_train, epochs=100, batch_size=150, callbacks=[es], validation_split=0.1, verbose=2)
-# end_time = time.time() - start_time
+import time
+start_time = time.time()
+hist = model.fit(x_train, y_train, epochs=100, batch_size=150, callbacks=[es], validation_split=0.1, verbose=2)
+end_time = time.time() - start_time
 
-# #4. 평가, 예측
-# loss = model.evaluate(x_test, y_test)
-# print('loss : ', loss[0])
-# print('accuracy : ', loss[1])
+#4. 평가, 예측
+loss = model.evaluate(x_test, y_test)
+print('loss : ', loss[0])
+print('accuracy : ', loss[1])
 
-# # plt 시각화
-# import matplotlib.pyplot as plt
-# plt.figure(figsize=(9, 5))
+# plt 시각화
+import matplotlib.pyplot as plt
+plt.figure(figsize=(9, 5))
 
-# # 1
-# plt.subplot(2, 1, 1)
-# plt.plot(hist.history['loss'], marker='.', c='red', label='loss')
-# plt.plot(hist.history['val_loss'], marker='.', c='blue', label='val_loss')
-# plt.grid()
-# plt.title('loss')
-# plt.ylabel('loss')
-# plt.xlabel('epoch')
-# plt.legend(loc='upper right')
+# 1
+plt.subplot(2, 1, 1)
+plt.plot(hist.history['loss'], marker='.', c='red', label='loss')
+plt.plot(hist.history['val_loss'], marker='.', c='blue', label='val_loss')
+plt.grid()
+plt.title('loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(loc='upper right')
 
 
 # # 2
@@ -104,7 +104,7 @@ model.summary()
 # plt.xlabel('epoch')
 # plt.legend(['acc', 'val_acc'])
 
-# plt.show()
+plt.show()
 
 # reshape 추가 , 모델 변경
 # loss :  0.12670952081680298

@@ -54,24 +54,24 @@ output1 = Dense(1, name='output1')(dense9)
 
 model = Model(inputs= input1, outputs=output1)
 
-# model.summary()
+model.summary()
 
 
-#3. 컴파일, 훈련
-model.compile(loss='mse', optimizer='adam')
+# #3. 컴파일, 훈련
+# model.compile(loss='mse', optimizer='adam')
 
-model.fit(x_train, y_train, epochs=100, batch_size=8, validation_split=0.3, verbose=2)
+# model.fit(x_train, y_train, epochs=100, batch_size=8, validation_split=0.3, verbose=2)
 
-#4. 평가, 예측
-loss = model.evaluate(x_test, y_test)
-print('loss : ', loss)
-y_predict = model.predict(x_test)
-# print('예측값 : ', y_predict)
+# #4. 평가, 예측
+# loss = model.evaluate(x_test, y_test)
+# print('loss : ', loss)
+# y_predict = model.predict(x_test)
+# # print('예측값 : ', y_predict)
 
-#5. r2 구하기
-r2 = r2_score(y_test, y_predict)
+# #5. r2 구하기
+# r2 = r2_score(y_test, y_predict)
 
-print("r2스코어 : ", r2)
+# print("r2스코어 : ", r2)
 
 # conv1d, MinMaxScaler
 # loss :  10.612846374511719

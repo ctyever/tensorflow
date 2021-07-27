@@ -13,6 +13,7 @@ from sklearn.metrics import r2_score
 
 # 1. 데이터 구성
 x_data = np.array(range(1, 101))
+print(x_data)
 
 y = np.array(range(6, 101))
 
@@ -54,7 +55,7 @@ dataset2 = split_x(x_predict, 5)
 '''
 x = dataset[:, :5]
 y = dataset[:, 5]
-# print(x.shape, y.shape) (95, 5) (95,)
+# print(x) 
 
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, 
@@ -92,6 +93,8 @@ dense9 = Dense(8, activation='relu', name='dense9')(dense8)
 output1 = Dense(1, name='output1')(dense9)
 
 model = Model(inputs= input1, outputs=output1)
+
+# model.summary()
 
 
 #3. 컴파일, 훈련

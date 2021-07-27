@@ -94,6 +94,8 @@ output1 = Dense(1, name='output1')(dense9)
 
 model = Model(inputs= input1, outputs=output1)
 
+# model.summary()
+
 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam')
@@ -104,13 +106,11 @@ model.fit(x_train, y_train, epochs=100, batch_size=8, validation_split=0.3, verb
 loss = model.evaluate(x_test, y_test)
 print('loss : ', loss)
 
-# dataset2 = dataset2.reshape(1, dataset2.shape[1], 1)
-# print(dataset2.shape) # (6, 5, 1)
 y_predict = model.predict(x_test)
-# print(y_predict)
-# print(y_test.shape)
+# print(y_predict.shape) # (29, 1)
+# print(y_test.shape) #(29,)
 
-# # 5. r2 구하기
+# 5. r2 구하기
 r2 = r2_score(y_test, y_predict)
 
 print("r2스코어 : ", r2)

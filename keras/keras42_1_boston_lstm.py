@@ -21,12 +21,12 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
         train_size=0.7, shuffle=True, random_state=9)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
-# scaler = MinMaxScaler()
+scaler = MinMaxScaler()
 # scaler = StandardScaler()
 # scaler = MaxAbsScaler()
 # scaler = RobustScaler()
 # scaler = QuantileTransformer()
-scaler = PowerTransformer()
+# scaler = PowerTransformer()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -70,6 +70,8 @@ y_predict = model.predict(x_test)
 r2 = r2_score(y_test, y_predict)
 
 print("r2스코어 : ", r2)
+
+
 
 # PowerTransformer, lstm
 # loss :  18.230154037475586

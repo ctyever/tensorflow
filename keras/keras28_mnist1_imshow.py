@@ -9,6 +9,8 @@ print(x_test.shape, y_test.shape) # (10000, 28, 28) (10000,)
 
 print(x_train[0])
 print("y[0] 값 : ", y_train[0])
+print(np.unique(y_train))
 
-plt.imshow(x_train[0], 'gray')
-plt.show()
+for i in range(10):
+    plt.imshow(x_train[i], 'gray')
+    plt.show()

@@ -7,9 +7,8 @@ import matplotlib.pyplot as plt
 # print(x_train.shape, y_train.shape) # (60000, 28, 28) (60000,)
 # print(x_test.shape, y_test.shape) # (10000, 28, 28) (10000,)
 
-print(x_train[1])
-print("y[1] 값 : ", y_train[1])
-
-plt.imshow(x_train[1], 'gray')
-plt.show()
-
+for i in range(10):
+    print(x_train[i])
+    print(f'y{[i]} 값 : ', y_train[i])
+    plt.imshow(x_train[i], 'gray')
+    plt.show()
