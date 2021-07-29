@@ -32,28 +32,30 @@ x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
 # 2. 모델 구성
 
 
-# model = Sequential()
-# # model.add(LSTM(units=10, activation='relu', input_shape=(28 * 28, 1)))
-# model.add(Conv1D(128, 2, activation='relu', input_shape=(28 * 28, 1)))
-# model.add(Flatten())
-# model.add(Dense(10, activation='softmax'))
+model = Sequential()
+# model.add(LSTM(units=10, activation='relu', input_shape=(28 * 28, 1)))
+model.add(Conv1D(128, 2, activation='relu', input_shape=(28 * 28, 1)))
+model.add(Flatten())
+model.add(Dense(10, activation='softmax'))
 
-# # #3. 컴파일, 훈련
-# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) # 다중분류에서 loss 는 categorical_crossentropy
+# #3. 컴파일, 훈련
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) # 다중분류에서 loss 는 categorical_crossentropy
 
-# from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-# es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
-# cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
-#                         filepath='./_save/ModelCheckPoint/keras48_MCP_fashion.hdf5')
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
+cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
+                        filepath='./_save/ModelCheckPoint/keras48_MCP_fashion.hdf5')
 
 
-# model.fit(x_train, y_train, epochs=100, batch_size=1500, callbacks=[es, cp], validation_split=0.1, verbose=2)
+model.fit(x_train, y_train, epochs=100, batch_size=1500, callbacks=[es, cp], validation_split=0.1, verbose=2)
 
 # model.save('./_save/ModelCheckPoint/keras48_model_fashion_save.h5')
 # model = load_model('./_save/ModelCheckPoint/keras48_model_fashion_save.h5') # save_model
-model = load_model('./_save/ModelCheckPoint/keras48_MCP_fashion.hdf5') #체크포인트
+# model = load_model('./_save/ModelCheckPoint/keras48_MCP_fashion.hdf5') #체크포인트
 
 #4. 평가, 예측
+
+
 loss = model.evaluate(x_test, y_test)
 print('loss : ', loss[0])
 print('accuracy : ', loss[1])

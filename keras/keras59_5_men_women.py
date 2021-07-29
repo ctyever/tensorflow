@@ -25,7 +25,7 @@ predict_datagen = ImageDataGenerator( rescale=1./255 )
 xy = datagen.flow_from_directory(
     './data/men_women',
     target_size=(150, 150),
-    batch_size=1700,
+    batch_size=3400,
     class_mode='binary',
     classes=['men', 'women']  
 )
@@ -41,14 +41,14 @@ pred = predict_datagen.flow_from_directory(
 # print(xy.class_indices) # {'men': 0, 'women': 1}
 # print(xy[0][0])  # x 값
 # print(xy[1][0])  # x 값
-print(xy[0][1])  # y 값
+# print(xy[0][1])  # y 값
 # print(pred[0][1])  # y 값
 # print(pred[0][0].shape)
 # print(xy[0][0].shape, xy[0][1].shape) # (3309, 150, 150, 3) (3309,)
 
-# np.save('./_save/_npy/k59_5_x.npy', arr=xy[0][0])
-# np.save('./_save/_npy/k59_5_y.npy', arr=xy[0][1])
-# np.save('./_save/_npy/k59_5_pred.npy', arr=pred[0][0])
+np.save('./_save/_npy/k59_5_x.npy', arr=xy[0][0])
+np.save('./_save/_npy/k59_5_y.npy', arr=xy[0][1])
+np.save('./_save/_npy/k59_5_pred.npy', arr=pred[0][0])
 
 
 
