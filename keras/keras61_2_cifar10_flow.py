@@ -27,7 +27,7 @@ train_datagen = ImageDataGenerator(
 # 1. ImageDataGenerator 를 정의
 # 2. 파일에서 땡겨올려면 -> flow_from_directory() // x, y가 튜플 형태로 뭉쳐있어
 # 3. 데이터에서 땡겨올려면 -> flow()              // x, y가 나눠있어
-# print(x_train.shape) # (60000, 28, 28)
+# print(x_train.shape, y_train) # (50000, 32, 32, 3)
 
 augment_size = 50000
 
@@ -39,9 +39,9 @@ y_augmented = y_train[randix].copy()
 # print(x_augmented.shape)
 
 
-x_augmented = x_augmented.reshape(x_augmented.shape[0], 32, 32, 1)
-x_train = x_train.reshape(x_train.shape[0], 32, 32, 1)
-x_test = x_test.reshape(x_test.shape[0], 32, 32, 1)
+x_augmented = x_augmented.reshape(x_augmented.shape[0], 32, 32, 3)
+x_train = x_train.reshape(x_train.shape[0], 32, 32, 3)
+x_test = x_test.reshape(x_test.shape[0], 32, 32, 3)
 
 import time
 start_time = time.time()
@@ -55,60 +55,64 @@ end_time = time.time() - start_time
 x_train = np.concatenate((x_train, x_augmented))
 y_train = np.concatenate((y_train, y_augmented))
 
-print(x_train.shape, y_train.shape)  # (100000, 28, 28, 1) (100000,)
+# print(x_train.shape, y_train.shape)  # (100000, 32, 32, 3) (100000, 1)
 
-# from tensorflow.keras.utils import to_categorical
-# y_train = to_categorical(y_train)
-# y_test = to_categorical(y_test)
+from tensorflow.keras.utils import to_categorical
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
 
-# # print(y_train.shape, y_test.shape) # (60000, 10) (10000, 10)
+# print(y_train.shape, y_test.shape) # (100000, 10) (10000, 10)
 
-# x_train = x_train.reshape(100000, 28 * 28)
-# x_test = x_test.reshape(10000, 28 * 28)
+x_train = x_train.reshape(100000, 32 * 32 * 3)
+x_test = x_test.reshape(10000, 32 * 32 * 3)
 
-# from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
-# scaler = MinMaxScaler()
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-# x_test = scaler.transform(x_test)
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
+scaler = MinMaxScaler()
+scaler.fit(x_train)
+x_train = scaler.transform(x_train)
+x_test = scaler.transform(x_test)
 
-# x_train = x_train.reshape(100000,28,28,1)
-# x_test = x_test.reshape(10000,28,28,1)
+x_train = x_train.reshape(100000,32,32,3)
+x_test = x_test.reshape(10000,32,32,3)
 
-# # 2. 모델 구성
+# 2. 모델 구성
 
-# model = Sequential()
-# model.add(Conv2D(filters=100, kernel_size=(2, 2), padding='same', input_shape=(28,28, 1)))
-# model.add(Conv2D(20, (2,2), activation='relu'))
-# model.add(Conv2D(20, (2,2), activation='relu')) 
-# model.add(MaxPooling2D()) 
-# model.add(Flatten()) 
-# model.add(Dense(64, activation='relu')) 
-# model.add(Dense(32, activation='relu'))
-# model.add(Dense(10, activation='softmax'))
+model = Sequential()
+model.add(Conv2D(filters=100, kernel_size=(2, 2), padding='same', input_shape=(32,32,3)))
+model.add(Conv2D(20, (2,2), activation='relu'))
+model.add(Conv2D(20, (2,2), activation='relu')) 
+model.add(MaxPooling2D()) 
+model.add(Flatten()) 
+model.add(Dense(64, activation='relu')) 
+model.add(Dense(32, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 
-# # #3. 컴파일, 훈련
-# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']) # 다중분류에서 loss 는 categorical_crossentropy
+# #3. 컴파일, 훈련
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']) # 다중분류에서 loss 는 categorical_crossentropy
 
-# from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-# es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
-
-
-# hist = model.fit(x_train, y_train, epochs=100, batch_size=1500, callbacks=[es], validation_split=0.1, verbose=2)
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
 
 
-# #4. 평가, 예측
-# acc = hist.history['acc']
-# val_acc = hist.history['val_acc']
-# loss = hist.history['loss']
-# val_loss = hist.history['val_loss']
+hist = model.fit(x_train, y_train, epochs=100, batch_size=1500, callbacks=[es], validation_split=0.1, verbose=2)
 
-# print('acc :', acc[-1])
-# print('val_acc: ', val_acc[-1])
 
-# loss = model.evaluate(x_test, y_test)
-# print('loss : ', loss[0])
-# print('accuracy : ', loss[1])
+#4. 평가, 예측
+acc = hist.history['acc']
+val_acc = hist.history['val_acc']
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
+
+print('acc :', acc[-1])
+print('val_acc: ', val_acc[-1])
+
+loss = model.evaluate(x_test, y_test)
+print('loss : ', loss[0])
+print('accuracy : ', loss[1])
+
+# 증폭
+# loss :  1.1680935621261597
+# accuracy :  0.6295999884605408
 
 # checkpoint
 # loss :  1.4343268871307373

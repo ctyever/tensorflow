@@ -55,12 +55,16 @@ print(x_train.shape, y_train.shape)  #(100000,28,28,1) (100000)
 
 
 # import matplotlib.pyplot as plt
-# fig = plt.figure()
-# for i in range(10):
-    
-#     plt.axis('off')
-#     plt.imshow(x_augmented[i], cmap='gray')
-#     plt.imshow(x_train[i], cmap='gray')
+# plt.figure(figsize=(2,10))
+# for i in range(20):    
+#     if i <= 9:        
+#         plt.subplot(2, 10, i+1)        
+#         plt.axis('off')        
+#         plt.imshow(x_train[i], cmap='gray')    
+#     else:       
+#         plt.subplot(2, 10, i+1)        
+#         plt.axis('off')        
+#         plt.imshow(x_train[i+60000], cmap='gray')
 
 # plt.show()
 
