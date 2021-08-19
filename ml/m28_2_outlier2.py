@@ -1,29 +1,38 @@
-import numpy as np 
+import numpy as np
+import warnings
+warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning) 
 
-aaa = np.array([[1,2,3,4,10000,6,7,5000,90,100, 5000],
-                [1000,2000,3,4000,5000,6000,7000,8,9000,10000, 1001]])
-
-# (2, 10) -> (10, 2)
+aaa = np.array([[1,2,10000,3,4,6,7,8,90,100,5000],
+                [1000,2000,3,4000,5000,6000,7000,8,9000,10000,1001]])
 
 aaa = aaa.transpose()
 print(aaa.shape)
 
-def outliers(data_out):
-    quartile_1, q2, quertile_3 = np.percentile(data_out, [25, 50, 75])
-    print("1사분위 : ", quartile_1)
-    print("q2 : ", q2)
-    print("3사분위 : ", quertile_3)
-    iqr = quertile_3 - quartile_1
-    lower_bound = quartile_1 - (iqr * 1.5)
-    upper_bound = quertile_3 + (iqr * 1.5)
-    return np.where((data_out>upper_bound) | (data_out<lower_bound))
 
-outliers_loc = outliers(aaa)
+def outlier(data_out):
+    lis = []
+    for i in range(data_out.shape[1]):
+        quartile_1, q2, quartile_3 = np.percentile(data_out[:, i], [25, 50, 75])
+        print("Q1 : ", quartile_1)
+        print("Q2 : ", q2)
+        print("Q3 : ", quartile_3)
+        iqr = quartile_3 - quartile_1
+        print("IQR : ", iqr)
+        lower_bound = quartile_1 - (iqr * 1.5)
+        upper_bound = quartile_3 + (iqr * 1.5)
+        print('lower_bound: ', lower_bound)
+        print('upper_bound: ', upper_bound)
 
-print('이상치의 위치 : ', outliers_loc)
+        m = np.where((data_out[:, i]>upper_bound) | (data_out[:, i]<lower_bound))
+        n = np.count_nonzero((data_out[:, i]>upper_bound) | (data_out[:, i]<lower_bound))
+        lis.append([i+1,'columns', m, 'outlier_num :', n])
 
-import matplotlib.pyplot as plt
+    return np.array(lis)
 
-plt.boxplot(aaa[:, 0], sym="bo")
-# plt.boxplot(aaa[:, 1], sym="bo")
-plt.show()
+outliers_loc = outlier(aaa)
+print("outlier at :", outliers_loc) 
+
+# import matplotlib.pyplot as plt
+
+# plt.boxplot(aaa)
+# plt.show()
