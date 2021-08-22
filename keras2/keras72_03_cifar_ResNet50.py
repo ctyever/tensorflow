@@ -5,7 +5,7 @@
 
 from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.applications import Xception
+from tensorflow.keras.applications import ResNet50
 import tensorflow as tf
 from tensorflow.keras.datasets import cifar100, cifar10
 import tensorflow as tf
@@ -37,15 +37,15 @@ y_test = to_categorical(y_test)
 
 
 # 2. 모델링
-xception = Xception(weights='imagenet', include_top=False, input_shape=(71, 71, 3))
+resnet50 = ResNet50(weights='imagenet', include_top=False, input_shape=(71, 71, 3))
 
 # model = VGG16()
 # model = VGG19()
 
-xception.trainable=True
+resnet50.trainable=True
 
 model = Sequential()
-model.add(xception)
+model.add(resnet50)
 model.add(Flatten())
 model.add(Dense(100, activation='relu'))
 # model.add(GlobalAveragePooling2D())
@@ -75,25 +75,24 @@ print('accuracy : ', loss[1])
 결과 출력
 1. cifar 10
 trainable = True, FC : loss=?, acc=?
-loss :  0.5047889351844788
-accuracy :  0.878600001335144
+loss :  2.133180618286133
+accuracy :  0.21729999780654907
 trainable = True, GAP : loss=?, acc=?
-loss :  0.5193849802017212
-accuracy :  0.8883000016212463
+loss :  0.8402936458587646
+accuracy :  0.7893999814987183
 trainable = False, FC : loss=?, acc=?
-loss :  1.9679077863693237
-accuracy :  0.21809999644756317
+loss :  1.0907052755355835
+accuracy :  0.7623000144958496
 trainable = False, GAP : loss=?, acc=?
-loss :  2.1879396438598633
-accuracy :  0.3815999925136566
+loss :  0.8865648508071899
+accuracy :  0.7249000072479248
+
 
 2. cifar 100
 trainable = True, FC : loss=?, acc=?
-loss :  1.8298718929290771
-accuracy :  0.6182000041007996
+
 trainable = True, GAP : loss=?, acc=?
-loss :  11.790122985839844
-accuracy :  0.5917999744415283
+
 trainable = False, FC : loss=?, acc=?
 
 trainable = False, GAP : loss=?, acc=?
