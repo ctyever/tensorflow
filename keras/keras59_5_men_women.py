@@ -10,14 +10,14 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 datagen = ImageDataGenerator(
     rescale=1./255,
-    horizontal_flip=True,
-    vertical_flip=True,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    rotation_range=5,
-    zoom_range=1.2,
-    shear_range=0.7,
-    fill_mode='nearest'
+    # horizontal_flip=True,
+    # vertical_flip=True,
+    # width_shift_range=0.1,
+    # height_shift_range=0.1,
+    # rotation_range=5,
+    # zoom_range=1.2,
+    # shear_range=0.7,
+    # fill_mode='nearest'
 )
 
 predict_datagen = ImageDataGenerator( rescale=1./255 )

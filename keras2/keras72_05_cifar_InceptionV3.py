@@ -41,7 +41,7 @@ inceptionv3 = InceptionV3(weights='imagenet', include_top=False, input_shape=(96
 # model = VGG16()
 # model = VGG19()
 
-inceptionv3.trainable=True
+inceptionv3.trainable=False
 
 model = Sequential()
 model.add(inceptionv3)
@@ -61,7 +61,7 @@ es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
 # cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 #                         filepath='./_save/ModelCheckPoint/keras48_MCP_cifar10.hdf5')
 
-model.fit(x_train, y_train, epochs=100, batch_size=8, callbacks=[es,], validation_split=0.08, verbose=2)
+model.fit(x_train, y_train, epochs=100, batch_size=32, callbacks=[es,], validation_split=0.08, verbose=2)
 
 
 loss = model.evaluate(x_test, y_test)
@@ -75,13 +75,17 @@ print('accuracy : ', loss[1])
 결과 출력
 1. cifar 10
 trainable = True, FC : loss=?, acc=?
-
+loss :  0.7288247346878052 
+accuracy :  0.7806000113487244
 trainable = True, GAP : loss=?, acc=?
-
+loss :  1.464992880821228  
+accuracy :  0.5371000170707703
 trainable = False, FC : loss=?, acc=?
-
+loss :  2.302643299102783  
+accuracy :  0.10000000149011612
 trainable = False, GAP : loss=?, acc=?
-
+loss :  9.818985939025879  
+accuracy :  0.3111000061035156
 
 
 2. cifar 100
