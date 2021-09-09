@@ -38,7 +38,7 @@ model.add(Dense(2, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) # 다중분류에서 loss 는 categorical_crossentropy
 
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
 # cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 #                         filepath='./_save/ModelCheckPoint/keras48_MCP_cifar10.hdf5')
 
