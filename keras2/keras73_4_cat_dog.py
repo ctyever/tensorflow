@@ -42,7 +42,7 @@ es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
 # cp = ModelCheckpoint(monitor='val_loss', save_best_only=True, mode='auto',
 #                         filepath='./_save/ModelCheckPoint/keras48_MCP_cifar10.hdf5')
 
-model.fit(x_train, y_train, epochs=100, batch_size=32, callbacks=[es,], validation_split=0.08, verbose=2)
+model.fit(x_train, y_train, epochs=100, batch_size=128, callbacks=[es,], validation_split=0.08, verbose=2)
 
 
 loss = model.evaluate(x_test, y_test)

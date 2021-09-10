@@ -6,7 +6,7 @@ y = np.load('./_save/_npy/k59_7_y.npy')
 
 # print(y)
 x_train, x_test, y_train, y_test = train_test_split(x, y, 
-        train_size=0.7, shuffle=True, random_state=66
+        train_size=0.8, shuffle=True, random_state=66
 )
 
 # print(x_train.shape, x_test.shape) # (371, 150, 150, 3) (159, 150, 150, 3)
