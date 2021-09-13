@@ -46,7 +46,7 @@ tb = TensorBoard(log_dir='./_save/_graph', histogram_freq=0,
                     write_graph=True, write_images=True)
 
 # model.fit(x_train, y_train)
-hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=32,
+hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=16,
     validation_split=0.1, callbacks=[es, tb]
 ) # 160/5 = 32
 

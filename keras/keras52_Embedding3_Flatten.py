@@ -64,7 +64,7 @@ model.add(Embedding(input_dim=28, output_dim=11, input_length=5))
 # input_length 안 쒀줘도 되는데 자동으로 인식하면서 None 으로 인식함
 # model.add(Embedding(128, 77)) # input_dim 이 단어개수 보다 많으면 됨, 그런데 맞춰주는게 좋음
 model.add(Flatten())
-model.add(Dense(10))
+model.add(Dense(14))
 model.add(Dense(1, activation='sigmoid'))
 
 model.summary()
