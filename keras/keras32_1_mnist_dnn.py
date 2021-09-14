@@ -62,7 +62,7 @@ model.add(MaxPooling2D())
 model.add(GlobalAveragePooling2D())
 model.add(Dense(10, activation='softmax'))
 
-# model.summary()
+model.summary()
 
 #3. 컴파일, 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']) # 다중분류에서 loss 는 categorical_crossentropy
